@@ -457,7 +457,7 @@ class Menu extends Phaser.Scene {
               spaceshipSpeed: 3,
               gameTimer: 60000    
             }
-            this.scene.start('twoPlayer'); 
+            this.scene.start('play'); 
 
         });
 
