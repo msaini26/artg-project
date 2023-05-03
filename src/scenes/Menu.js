@@ -20,7 +20,7 @@ class Menu extends Phaser.Scene {
 
   preload() {
 
-    this.load.image('rocket', './assets/Rocket Patrol/rocket.png');
+    this.load.image('rocket', './assets/Rocket Patrol/duck.png');
     this.load.image('rocket2', './assets/Rocket Patrol/rocket-2.png');
     this.load.image('redButton', './assets/Rocket Patrol/button-2.png.png');
     this.load.image('smallButton', './assets/Rocket Patrol/multiplayerButton.png');
