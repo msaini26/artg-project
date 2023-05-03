@@ -113,138 +113,20 @@ class Menu extends Phaser.Scene {
       this.p1Rocket.update();
       this.p2Rocket.update();
 
-      this.collisionWrapper(this.p1Rocket, this.easy);
-      this.collisionWrapper(this.p1Rocket, this.expert);
+      this.p1Rocket.collisionWrapper(this.easy);
+      this.p1Rocket.collisionWrapper(this.expert);
 
-      this.smallButtonCollisionWrapper(this.p1Rocket, this.p2Rocket, this.twoPlayer)
+      /*this.smallButtonCollisionWrapper(this.p1Rocket, this.p2Rocket, this.twoPlayer)
       this.smallButtonCollisionWrapper(this.p2Rocket, this.p1Rocket, this.twoPlayer)
 
       this.twoPlayerCollisionWrapper(this.p1Rocket, this.twoPlayerConfirm)
       this.twoPlayerCollisionWrapper(this.p2Rocket, this.twoPlayerConfirm)
 
-      this.rocketCollisionWrapper(this.p1Rocket, this.p2Rocket);
-
-    }
-
-    checkCollision(rocket, ship) {
-
-      if (rocket.active) {
-        // simple AABB checking
-        if (rocket.x < ship.x + ship.width &&       // check if rocket origin is to left of ship's RIGHT bound
-            rocket.x + rocket.width > ship.x &&     // check if ship origin is to left of ROCKET'S RIGHT bound
-            rocket.y < ship.y + ship.height + 0 &&      // check if rocket origin is above ship's LOWER bound
-            rocket.height + rocket.y + 10 > ship. y) {   // check if ship origin is above ROCKET'S LOWER bound
-            
-            if (rocket.y > ship.y && !rocket.peaked){   // if hit ship's underside
-                rocket.bonked = true;
-            } else {
-                rocket.bonked = false;
-            }
-            
-            return true;
-
-          } else {
-            return false;
-          }
-      
-      }
+      this.rocketCollisionWrapper(this.p1Rocket, this.p2Rocket);*/
 
   }
 
-  buttonExplode(rocket, ship) {
-
-    if (rocket.dropping) {
-
-      console.log("hit by massive force")
-      // temporarily hide ship
-      ship.alpha = 0;
-
-      // create explosion sprite at ship's position
-      let boom = this.add.sprite(ship.x, ship.y, 'explosion').setOrigin(0, 0);
-      boom.anims.play('explode');     //that one anims you created earlier - play it
-      boom.on('animationcomplete', () => {
-
-          //ship.reset();       // reset ship to right of screen
-          boom.destroy();     // destroy explosion object
-          ship.alpha = 1;
-
-          if (ship.easy) {
-
-            game.settings = {
-              spaceshipSpeed: 3,
-              gameTimer: 60000    
-            }
-
-            this.sound.play('sfx_select');
-            this.scene.start('playScene'); 
-
-          } else {
-
-            game.settings = {
-              spaceshipSpeed: 4,
-              gameTimer: 45000    
-            }
-
-            this.sound.play('sfx_select');
-            this.scene.start('playScene');  
-
-          }
-
-      });
-
-      this.sound.play('sfx_explosion');
-
-    } else if (!rocket.bonked) {
-
-      ship.y += 5;
-
-      // create explosion sprite at ship's position
-      let boom = this.add.sprite(ship.x, ship.y, 'explosion').setOrigin(0, 0);
-      boom.alpha = 0;
-      boom.anims.play('explode');     //that one anims you created earlier - play it
-      boom.on('animationcomplete', () => {
-
-          //ship.reset();       // reset ship to right of screen
-          boom.destroy();     // destroy explosion object
-          ship.y -= 5;
-
-      });
-    } else {
-
-      ship.y -= 5;
-
-      // create explosion sprite at ship's position
-      let boom = this.add.sprite(ship.x, ship.y, 'explosion').setOrigin(0, 0);
-      boom.alpha = 0;
-      boom.anims.play('explode');     //that one anims you created earlier - play it
-      boom.on('animationcomplete', () => {
-
-          //ship.reset();       // reset ship to right of screen
-          boom.destroy();     // destroy explosion object
-          ship.y += 5;
-
-      });
-    }
-
-  }
-
-  collisionWrapper(rocket, ship){
-
-      if (this.checkCollision(rocket, ship) && !this.twoPlayersActivated) {
-          
-          if (!rocket.bonked && !rocket.dropping) {
-              rocket.smallJump();
-          } else if (rocket.bonked) {
-              rocket.bonk();
-          }
-
-          console.log("a collision happend...")
-
-          this.buttonExplode(rocket, ship);
-
-      }
-
-  }
+  
 
   smallButtonCollisionWrapper(rocket01, rocket02, ship){
 

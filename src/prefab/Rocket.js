@@ -3,7 +3,7 @@
 //// NOTES ///////////
 
 // ground-pounding is giving an INSANE amound of points
-    // collision doesn't disable ship sprite - there is some
+    // collision doesn't disable collidee sprite - there is some
     // latency before it resets to right of screen
 
 //////////////////////
@@ -52,8 +52,8 @@ class Rocket extends Phaser.GameObjects.Sprite {
         this.peaked = false;    // start deceleration
         this.grounded = true;   // fell back down; reset
         this.jumping = false;   // is in process of jumping
-        this.bouncing = false;  // is BOUNCING from ship to ship
-        this.bonked = false;    // hit underside of ship
+        this.bouncing = false;  // is BOUNCING from collidee to collidee
+        this.bonked = false;    // hit underside of collidee
         this.dropping = false;  // player executed ground-pound
         
         this.mouseActivated = false;
@@ -383,6 +383,49 @@ class Rocket extends Phaser.GameObjects.Sprite {
             this.bonk();
         }
 
+    }
+
+    checkCollision(collidee) {
+
+        if (this.active) {
+          // simple AABB checking
+          if (this.x < collidee.x + collidee.width &&       // check if rocket origin is to left of collidee's RIGHT bound
+              this.x + this.width > collidee.x &&     // check if collidee origin is to left of ROCKET'S RIGHT bound
+              this.y < collidee.y + collidee.height + 0 &&      // check if rocket origin is above collidee's LOWER bound
+              this.height + this.y + 10 > collidee. y) {   // check if collidee origin is above ROCKET'S LOWER bound
+              
+              if (this.y > collidee.y && !this.peaked){   // if hit collidee's underside
+                  this.bonked = true;
+              } else {
+                  this.bonked = false;
+              }
+              
+              return true;
+  
+            } else {
+              return false;
+            }
+        
+        }
+    
+    }
+
+    collisionWrapper(collidee){
+
+        if (this.checkCollision(collidee) && !this.twoPlayersActivated) {
+            
+            if (!this.bonked && !this.dropping) {
+                this.smallJump();
+            } else if (this.bonked) {
+                this.bonk();
+            }
+  
+            console.log("a collision happend...")
+  
+            collidee.explode(this);
+  
+        }
+  
     }
 
 }
