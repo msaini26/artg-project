@@ -1,5 +1,3 @@
-console.log("what is happening")
-
 let config = {
 
     type: Phaser.CANVAS,
