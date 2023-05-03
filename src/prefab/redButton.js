@@ -6,6 +6,7 @@ class Button extends Phaser.GameObjects.Sprite {
         scene.add.existing(this);
 
         this.easy = difficulty;
+        this.activated = true;
 
     }
 
@@ -15,29 +16,16 @@ class Button extends Phaser.GameObjects.Sprite {
 
     explode(rocket) {
 
+      if (this.activated){
+
         if (rocket.dropping) {
     
           // temporarily hide ship
           this.alpha = 0;
     
           // create explosion sprite at ship's position
-          this.alpha = 1;
     
-            if (this.easy) {
-    
-                game.settings = {
-                  spaceshipSpeed: 3,
-                  gameTimer: 60000    
-                }
-    
-            } else {
-    
-                game.settings = {
-                  spaceshipSpeed: 4,
-                  gameTimer: 45000    
-                }
-    
-            }
+          this.activated = false;
     
         } else if (!rocket.bonked) {
     
@@ -60,5 +48,7 @@ class Button extends Phaser.GameObjects.Sprite {
         
     
     }
+  
+  }
 
 }

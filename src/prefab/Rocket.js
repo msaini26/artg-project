@@ -400,7 +400,7 @@ class Rocket extends Phaser.GameObjects.Sprite {
                   this.bonked = false;
               }
               
-              return true;
+              return true && collidee.activated;
   
             } else {
               return false;
