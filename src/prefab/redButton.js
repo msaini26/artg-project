@@ -7,8 +7,6 @@ class Button extends Phaser.GameObjects.Sprite {
 
         this.easy = difficulty;
 
-        this.effect = effect; 
-
     }
 
     update() {
@@ -41,15 +39,13 @@ class Button extends Phaser.GameObjects.Sprite {
     
             }
     
-          };
-    
         } else if (!rocket.bonked) {
     
           this.y += 5;
     
             // figure out the delay + animation
 
-          ship.y -= 5;
+          this.y -= 5;
     
 
         } else {
@@ -60,7 +56,7 @@ class Button extends Phaser.GameObjects.Sprite {
           
           this.y += 5;
     
-        };
+        }
         
     
     }
