@@ -10,7 +10,7 @@ let game = new Phaser.Game(config);
 
 // reserve keyboard vars
 
-let keyF, keyR, keyLEFT, keyRIGHT, keyDOWN, clickLeft;
+let keyF, keyR, keyLEFT, keyRIGHT, keyDOWN, clickLeft, keySPACE;
 
 // set UI
 

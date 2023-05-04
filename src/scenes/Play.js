@@ -96,7 +96,7 @@ class Play extends Phaser.Scene {
     
     // the player
         // add rocket (p1)
-        this.p1Rocket = new Rocket(this, game.config.width/2, game.config.height - borderUISize*2 - borderPadding*2 - 110, 'rocket').setOrigin(0.5, 0);
+        this.p1Rocket = new Rocket(this, game.config.width/2, game.config.height - borderUISize*2 - borderPadding*2 - 75, 'rocket').setOrigin(0.5, 0);
 
         // define keys for controls
 
@@ -167,23 +167,20 @@ class Play extends Phaser.Scene {
         this.ground.tilePositionX -= 0.5; // right - moving ground    
 
     // // sprite movements
-    //     if (!this.gameOver) {       // if game's still goin
+        if (!this.gameOver) {       // if game's still goin
 
-    //         if (!this.p1Rocket.grounded) {
-    //             this.fireUI.alpha = 1;
-    //         } else {
-    //             this.fireUI.alpha = 0;
-    //         }
-
-    //         this.p1Rocket.update();
-
+            // if (!this.p1Rocket.grounded) {
+            //     this.fireUI.alpha = 1;
+            // } else {
+            //     this.fireUI.alpha = 0;
+            // }
+            this.p1Rocket.update();
     //         this.ship01.update();
     //         this.ship02.update();
     //         this.ship03.update();
 
     //         this.swordfish.update();
-        
-    //    }
+       }
 
     // check collisions
         

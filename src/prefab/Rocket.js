@@ -123,7 +123,7 @@ class Rocket extends Phaser.GameObjects.Sprite {
     // reset rocket to "ground"
     groundReset() {
 
-        this.y = game.config.height - borderUISize - borderPadding;     // back to ground
+        this.y = game.config.height - borderUISize*2 - borderPadding*2 - 75;     // back to ground
         this.jumping = false;                                           // jumping has stopped
         this.grounded = true;                                           // back on the ground
         this.dropping = false;                                          // can't drop further down
@@ -196,7 +196,7 @@ class Rocket extends Phaser.GameObjects.Sprite {
 
         }
 
-        if (this.y >= game.config.height - borderUISize - borderPadding){   // ground hit
+        if (this.y >= game.config.height - borderUISize*2 - borderPadding*2 - 75){   // ground hit
 
             this.groundReset();
 
