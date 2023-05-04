@@ -19,31 +19,30 @@
 //////////////////////
 
 class Play extends Phaser.Scene {
-
     constructor() {
-
         super('playScene');
-
     }
 
     preload() {     // assets to use
 
-        this.load.image('rocket', './assets/Rocket Patrol/rocket.png');
-        this.load.image('spaceship', './assets/Rocket Patrol/spaceship.png');
-        this.load.image('starfield', './assets/Rocket Patrol/starfield.png');
-        this.load.image('swordfish', './assets/Rocket Patrol/swordfish.png');
-        this.load.spritesheet('explosion', './assets/Rocket Patrol/explosion.png', {frameWidth: 64, frameHeight: 32, 
+        this.load.image('ground', './assets/background/ground_smaller.png'); // import ground image
+        this.load.image('sky', './assets/background/sky.png'); // import sky
+        this.load.image('rocket', './assets/characters/duck.png'); // import duck image
+        this.load.image('spaceship', './assets/characters/spaceship.png'); // import spaceship
+        this.load.image('swordfish', './assets/characters/swordfish.png'); // import speed rocket (swordfish)
+        this.load.spritesheet('explosion', './assets/spritesheets/explosion.png', {frameWidth: 64, frameHeight: 32, 
             startFrame: 0, endFrame: 9});
-
     }
 
     create() {      // happens exactly once at beginning
 
-        console.log("no bug here");
+        // console.log("no bug here");
 
     // the set-up
 
-        this.starfield = this.add.tileSprite(0, 0, 640, 480, 'starfield').setOrigin(0, 0);
+        // import background
+        this.starfield = this.add.tileSprite(0, 0, 640, 480, 'sky').setOrigin(0, 0); // sky background as the 'starfield'
+        this.ground = this.add.tileSprite(0, 0, 640, 680, 'ground').setOrigin(0, 0); // game ground asset
 
         // green UI background
         this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0x00FF00).setOrigin(0, 0);
@@ -112,7 +111,7 @@ class Play extends Phaser.Scene {
         keyDOWN = 
             this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
 
-        this.mouseActive = false;
+        // this.mouseActive = false;
 
     // the enemy
 

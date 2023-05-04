@@ -2,10 +2,6 @@
 
 //// NOTES ///////////
 
-// ground-pounding is giving an INSANE amound of points
-    // collision doesn't disable collidee sprite - there is some
-    // latency before it resets to right of screen
-
 //////////////////////
 
 class Rocket extends Phaser.GameObjects.Sprite {
@@ -56,7 +52,7 @@ class Rocket extends Phaser.GameObjects.Sprite {
         this.bonked = false;    // hit underside of collidee
         this.dropping = false;  // player executed ground-pound
         
-        this.mouseActivated = false;
+        // this.mouseActivated = false;
         this.downAvailable = false;
 
         this.score = 0;
@@ -72,78 +68,7 @@ class Rocket extends Phaser.GameObjects.Sprite {
 
     update() {      // update method
 
-        if (!this.twoPlayersActivated && this.player01 && this.active) { this.singlePlayerUpdate() }    // if playing solo
-
-        if (this.twoPlayersActivated && this.active) {                                 // if two player
-
-            if (this.player01){             // player one uses keyboard
-                this.playerOneUpdate();
-            }
-
-            if (this.player02){             // player two uses mouse
-                this.playerTwoUpdate();
-            }
-
-        }
-
-    }
-
-    singlePlayerUpdate() {
-
-        if (game.input.activePointer.isDown) { this.mouseActivated = true; }
         if (this.jumping && !game.input.activePointer.isDown) { this.downAvailable = true; }
-
-        // left/right movement
-        if ((keyLEFT.isDown || (game.input.mousePointer.x < this.x - 5 && this.mouseActivated)) && this.x >= borderUISize + this.width) {
-
-            if (this.jumping){
-                this.x -= this.airSpeed;    // floaty movement in the air
-            } else {
-                this.x -= this.moveSpeed;
-            }
-
-        } else if ((keyRIGHT.isDown || (game.input.mousePointer.x > this.x + 5 && this.mouseActivated)) && this.x <= game.config.width - borderUISize - this.width) {
-
-            if (this.jumping){
-                this.x += this.airSpeed;    // floaty movement in the air
-            } else {
-                this.x += this.moveSpeed;
-            }
-
-        }
-
-
-        // jump button
-        if ((Phaser.Input.Keyboard.JustDown(keyF) || game.input.activePointer.isDown) && this.grounded) { // keyF.isDown for constant, Phaser.Input.Keyboard.JustDown(keyF) for once
-            
-            console.log("jumping...")
-            this.grounded = false;
-            this.jumping = true;
-            this.sfxRocket.play();
-            
-        }
-
-        if ((Phaser.Input.Keyboard.JustDown(keyDOWN) && !this.grounded) || (game.input.activePointer.isDown && this.downAvailable)) { // keyDOWN.isDown for constant, Phaser.Input.Keyboard.JustDown(keyDOWN) for once
-            
-            console.log("going down...")
-            this.dropping = true;
-            this.jumping = false;
-            this.bouncing = false;
-            
-        }
-        
-        // in the air, two states: jumping or ground-pounding (dropping)
-        if (this.jumping) {
-            this.jump();
-        }
-
-        if (this.dropping) {
-            this.drop();
-        }
-
-    }
-
-    playerOneUpdate() {
 
         // left/right movement
         if (keyLEFT.isDown && this.x >= borderUISize + this.width) {
@@ -154,7 +79,7 @@ class Rocket extends Phaser.GameObjects.Sprite {
                 this.x -= this.moveSpeed;
             }
 
-        } else if (keyRIGHT.isDown && this.x <= game.config.width - borderUISize - this.width) {
+        } else if (keyRIGHT.isDown && this.x <= game.config.width - borderUISize - this.width) { //(game.input.mousePointer.x > this.x + 5 && this.mouseActivated)
 
             if (this.jumping){
                 this.x += this.airSpeed;    // floaty movement in the air
@@ -166,7 +91,7 @@ class Rocket extends Phaser.GameObjects.Sprite {
 
 
         // jump button
-        if (Phaser.Input.Keyboard.JustDown(keyF) && this.grounded) { // keyF.isDown for constant, Phaser.Input.Keyboard.JustDown(keyF) for once
+        if ((Phaser.Input.Keyboard.JustDown(keyF)) && this.grounded) { // keyF.isDown for constant, Phaser.Input.Keyboard.JustDown(keyF) for once
             
             console.log("jumping...")
             this.grounded = false;
@@ -175,63 +100,7 @@ class Rocket extends Phaser.GameObjects.Sprite {
             
         }
 
-        if (Phaser.Input.Keyboard.JustDown(keyDOWN) && !this.grounded) { // keyDOWN.isDown for constant, Phaser.Input.Keyboard.JustDown(keyDOWN) for once
-            
-            console.log("going down...")
-            this.dropping = true;
-            this.jumping = false;
-            this.bouncing = false;
-            
-        }
-        
-        // in the air, two states: jumping or ground-pounding (dropping)
-        if (this.jumping) {
-            this.jump();
-        }
-
-
-        if (this.dropping) {
-            this.drop();
-        }
-
-    }
-
-    playerTwoUpdate() {
-
-        if (game.input.activePointer.isDown) { this.mouseActivated = true; }
-        if (this.jumping && !game.input.activePointer.isDown) { this.downAvailable = true; }
-
-        // left/right movement
-        if ((game.input.mousePointer.x < this.x - 5 && this.mouseActivated) && this.x >= borderUISize + this.width) {
-
-            if (this.jumping){
-                this.x -= this.airSpeed;    // floaty movement in the air
-            } else {
-                this.x -= this.moveSpeed;
-            }
-
-        } else if ((game.input.mousePointer.x > this.x + 5 && this.mouseActivated) && this.x <= game.config.width - borderUISize - this.width) {
-
-            if (this.jumping){
-                this.x += this.airSpeed;    // floaty movement in the air
-            } else {
-                this.x += this.moveSpeed;
-            }
-
-        }
-
-
-        // jump button
-        if (game.input.activePointer.isDown && this.grounded) { // keyF.isDown for constant, Phaser.Input.Keyboard.JustDown(keyF) for once
-            
-            console.log("jumping...")
-            this.grounded = false;
-            this.jumping = true;
-            this.sfxRocket.play();
-            
-        }
-
-        if (game.input.activePointer.isDown && this.downAvailable) { // keyDOWN.isDown for constant, Phaser.Input.Keyboard.JustDown(keyDOWN) for once
+        if ((Phaser.Input.Keyboard.JustDown(keyDOWN) && !this.grounded)) { // keyDOWN.isDown for constant, Phaser.Input.Keyboard.JustDown(keyDOWN) for once
             
             console.log("going down...")
             this.dropping = true;
@@ -247,10 +116,6 @@ class Rocket extends Phaser.GameObjects.Sprite {
 
         if (this.dropping) {
             this.drop();
-        }
-
-        if (this.spawning) {
-            this.x -= 1;
         }
 
     }
